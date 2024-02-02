@@ -145,8 +145,12 @@ local sortFunctions = {
 			else
 				return (k1.sortOrder or 0) < (k2.sortOrder or 0)
 			end
-		else
+		elseif ns1 and ns2 then
 			return ns1 < ns2
+		elseif ns1 and not ns2 then
+			return true
+		elseif ns2 and not ns1 then
+			return false
 		end
 	end,
 	
@@ -176,8 +180,12 @@ local sortFunctions = {
 				else
 					return (k1.sortOrder or 0) < (k2.sortOrder or 0)
 				end
-			else
+			elseif ns1 and ns2 then
 				return ns1 < ns2
+			elseif ns1 and not ns2 then
+				return true
+			elseif ns2 and not ns1 then
+				return false
 			end
 		else
 			return k1.unlocked
@@ -667,6 +675,7 @@ local function isAchievementModOfOriginLoaded(id)
 	if not id:find("_") then return true end
 	local namespace
 	if stringUtils.startsWith(id, "InGameAchievements_AUTOGENALLZONES_") then
+		if not id:find("_", 36) then return true end
 		namespace = id:sub(36, id:find("_", 36) - 1)
 	else
 		namespace = id:sub(1, id:find("_") - 1)

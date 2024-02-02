@@ -15,6 +15,9 @@ iconData = settings.user.table {
 	deserializer = function(data)
 		return serialization.deserialize(zStandard.decompress(base64.decode(data)))
 	end,
+	format = function()
+		return "<do not select, framerate will die>"
+	end,
 }
 
 function iconStorage.getImage(id)
